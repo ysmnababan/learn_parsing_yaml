@@ -1,0 +1,23 @@
+root/
+  cmd/                     
+    cron/
+  config/
+    config.go
+    stringutils.go
+    config_models.go
+  internal/
+    abstraction/
+    factory/
+    app/
+    middleware/
+    server/
+    pkg/
+    utils/
+  docs/
+  migrations/
+  test/
+  Dockerfile
+  .env
+  .gitignore
+  README.md
+  main.go                       
