@@ -16,22 +16,6 @@ type Node struct {
 	ParentNode *Node
 }
 
-// type LineAttr struct {
-// 	Keyword     []Rune
-// 	Indentation int
-// 	IsFolder    bool
-// }
-
-// func CreateNode(attr *LineAttr) *Node {
-// 	node := new(Node)
-// 	node.Name = string(attr.Keyword)
-// 	node.IsFolder = attr.IsFolder
-// 	node.Level = attr.Indentation
-// 	node.ParentNode = nil
-// 	node.Content = nil
-// 	return node
-// }
-
 func (parent *Node) InsertNode(currentNode *Node) {
 	if currentNode.IsRoot() {
 		parent.IsFolder = true
@@ -100,9 +84,7 @@ func main() {
 		if len(line) == 0 {
 			continue
 		}
-
 		node := parseLine(line)
-		// node := CreateNode(attr)
 		root.InsertNode(node)
 	}
 
@@ -116,12 +98,15 @@ func main() {
 
 func parseLine(line string) *Node {
 	// line can't be empty
+	if len(line) == 0 {
+		return nil
+	}
 	runes := []Rune(line)
 	keyword := []Rune{}
-	// lp := &LineAttr{}
+
 	node := &Node{}
 	if runes[len(runes)-1].IsSlash() {
-		// lp.IsFolder = true
+
 		node.IsFolder = true
 	}
 	i := 0
@@ -131,7 +116,7 @@ func parseLine(line string) *Node {
 			break
 		}
 		i++
-		// lp.Indentation++
+
 		node.Level++
 	}
 
@@ -140,17 +125,15 @@ func parseLine(line string) *Node {
 		if i == len(runes)-1 && runes[i].IsSlash() {
 			break
 		}
-		// lp.Keyword = append(lp.Keyword, runes[i])
+
 		keyword = append(keyword, runes[i])
 		i++
 		if i >= len(runes) {
 			break
 		}
 	}
-	// lp.Indentation = lp.Indentation / 2
 	node.Level = node.Level / 2
 	node.Name = string(keyword)
-	// fmt.Println(lp.Indentation, string(lp.Keyword), lp.IsFolder)
 	return node
 }
 
